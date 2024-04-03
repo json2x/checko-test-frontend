@@ -80,10 +80,10 @@ const styleOptions = ref(["Sad", "Scary", "Serious", "Adventourous"]);
 
 const story = ref(null);
 
-function getData() {
-  console.log(sampleData);
-  story.value = sampleData;
-}
+// function getData() {
+//   console.log(sampleData);
+//   story.value = sampleData;
+// }
 
 async function generateStory() {
   try {

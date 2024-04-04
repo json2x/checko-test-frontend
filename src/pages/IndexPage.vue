@@ -28,6 +28,8 @@
             label="Topic"
             outlined
             class="q-mb-md"
+            error-message="Please input a topic"
+            :error="isFormValid"
           />
 
           <q-select
@@ -69,11 +71,12 @@
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
-import sampleData from "../boot/sample.json";
+// import sampleData from "../boot/sample.json";
 
 const $q = useQuasar();
 
 const isGenerating = ref(false);
+const isFormValid = ref(false);
 const topic = ref("");
 const style = ref(null);
 const styleOptions = ref(["Sad", "Scary", "Serious", "Adventourous"]);
@@ -81,6 +84,17 @@ const styleOptions = ref(["Sad", "Scary", "Serious", "Adventourous"]);
 const story = ref(null);
 
 async function generateStory() {
+  isFormValid.value = false;
+
+  if (!topic.value) {
+    isFormValid.value = true;
+    $q.notify({
+      type: "negative",
+      message: "Fill in a topic",
+    });
+    return;
+  }
+
   try {
     isGenerating.value = true;
     const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL;
